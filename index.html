@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Love ❤️</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, #ff9a9e, transparent 40%),
+    linear-gradient(135deg, #ff416c, #8e2de2);
+  color: white;
+  overflow-x: hidden;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#intro, #envelopeScreen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: 1s ease;
+}
+
+#intro {
+  z-index: 1000;
+  background: radial-gradient(circle, #ff758c, #8e2de2);
+}
+
+#envelopeScreen {
+  z-index: 900;
+  background: linear-gradient(135deg, #ff758c, #c471ed);
+}
+
+.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.gift {
+  font-size: 90px;
+  margin-bottom: 25px;
+  animation: bounce 1.2s infinite;
+}
+
+@keyframes bounce {
+  50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+#openBtn {
+  padding: 17px 30px;
+  border: none;
+  border-radius: 50px;
+  background: white;
+  color: #ff416c;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 10px 30px #0004;
+}
+
+.envelope-wrapper {
+  text-align: center;
+}
+
+.envelope {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  margin: auto;
+  cursor: pointer;
+  perspective: 800px;
+}
+
+.envelope-body {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 15px 35px #0005;
+  overflow: hidden;
+}
+
+.envelope-body::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-bottom: 110px solid #f3d1dc;
+}
+
+.envelope-body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-top: 105px solid #eab6c7;
+}
+
+.flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-top: 110px solid #ffb6c9;
+  transform-origin: top;
+  transition: 1s;
+}
+
+.letter {
+  position: absolute;
+  left: 25px;
+  top: 20px;
+  z-index: 1;
+  width: 250px;
+  height: 160px;
+  padding: 25px 15px;
+  border-radius: 8px;
+  background: white;
+  color: #ff416c;
+  transition: 1.2s;
+}
+
+.letter h3 { margin-bottom: 10px; }
+
+.envelope.open .flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope.open .letter {
+  transform: translateY(-140px);
+  z-index: 5;
+}
+
+.open-text {
+  margin-top: 35px;
+  font-size: 18px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  50% { opacity: .5; }
+}
+
+#main {
+  display: none;
+  min-height: 100vh;
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.content {
+  max-width: 700px;
+  width: 100%;
+  margin: auto;
+  padding: 30px 20px;
+  border-radius: 30px;
+  background: #ffffff1f;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 60px #0003;
+}
+
+.birthday-title {
+  font-size: 42px;
+  margin-bottom: 12px;
+  text-shadow: 0 5px 20px #0004;
+  animation: pop 1.5s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.name { color: #fff59d; }
+
+.cake {
+  font-size: 70px;
+  margin: 10px;
+  animation: float 2s infinite;
+}
+
+@keyframes float {
+  50% { transform: translateY(-12px); }
+}
+
+.photo-box {
+  width: 220px;
+  height: 220px;
+  margin: 25px auto;
+  padding: 7px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, white, #ffb6c9, white);
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  to { box-shadow: 0 0 35px #ffd1dc; }
+}
+
+.photo-box img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.typing-area {
+  min-height: 120px;
+  margin: 25px auto;
+  max-width: 600px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+#typingText {
+  border-right: 2px solid white;
+  padding-right: 5px;
+}
+
+.question { margin-top: 35px; }
+
+.question h2 {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  position: relative;
+  height: 100px;
+  width: 100%;
+}
+
+.yes-btn, .no-btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.yes-btn {
+  background: #ff1744;
+  color: white;
+  margin-right: 15px;
+  box-shadow: 0 5px 20px #ff174480;
+}
+
+.no-btn {
+  position: absolute;
+  background: white;
+  color: #ff1744;
+}
+
+#answer {
+  margin-top: 20px;
+  font-size: 21px;
+  font-weight: bold;
+  min-height: 35px;
+  overflow-wrap: anywhere;
+}
+
+.extra {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 35px;
+}
+
+.extra button {
+  padding: 14px;
+  border: 1px solid #ffffff66;
+  border-radius: 30px;
+  background: #ffffff1f;
+  color: white;
+  font-size: 16px;
+}
+
+.extra button:hover {
+  background: white;
+  color: #ff416c;
+}
+
+#finalMessage, #treatSection {
+  display: none;
+  margin-top: 30px;
+  padding: 25px 20px;
+  background: #ffffff26;
+  border: 1px solid #ffffff40;
+  border-radius: 22px;
+  line-height: 1.9;
+  animation: fadeIn 1.5s ease;
+}
+
+#finalMessage p { margin: 12px 0; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.heart {
+  position: fixed;
+  bottom: -50px;
+  pointer-events: none;
+  animation: heartFloat linear forwards;
+  z-index: 5;
+}
+
+@keyframes heartFloat {
+  to {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+#loveRain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2000;
+  overflow: hidden;
+}
+
+.loveEmoji {
+  position: absolute;
+  bottom: -80px;
+  animation: loveFloat 5s linear forwards;
+  pointer-events: none;
+}
+
+@keyframes loveFloat {
+  0% { transform: translateY(0) rotate(0) scale(1); opacity: 0; }
+  15% { opacity: 1; }
+  50% { transform: translateY(-50vh) rotate(180deg) scale(1.3); }
+  100% { transform: translateY(-115vh) rotate(360deg) scale(.8); opacity: 0; }
+}
+
+#kissMessage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: #140014eF;
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 25px;
+  overflow-y: auto;
+  animation: fadeIn 1.5s ease;
+}
+
+.bigKiss {
+  font-size: 90px;
+  animation: kissBeat 1s infinite;
+}
+
+@keyframes kissBeat {
+  50% { transform: scale(1.2) rotate(5deg); }
+}
+
+#kissMessage h1 {
+  font-size: 38px;
+  color: #ffb6d9;
+  margin: 15px 0;
+}
+
+#kissMessage p {
+  font-size: 18px;
+  margin: 10px;
+}
+
+.loveEmojis {
+  font-size: 27px;
+  line-height: 2;
+  max-width: 500px;
+}
+
+#kissMessage h2 { margin-top: 20px; }
+
+.treat-title {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.treat-btn {
+  margin-top: 15px;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 40px;
+  background: white;
+  color: #ff416c;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 5px 20px #0003;
+}
+
+#treatReply {
+  margin-top: 20px;
+  font-size: 19px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .birthday-title { font-size: 31px; }
+  .photo-box { width: 180px; height: 180px; }
+  .envelope { width: 260px; height: 175px; }
+  .envelope-body::before {
+    border-left-width: 130px;
+    border-right-width: 130px;
+  }
+  .envelope-body::after {
+    border-left-width: 130px;
+    border-right-width: 130px;
+  }
+  .flap {
+    border-left-width: 130px;
+    border-right-width: 130px;
+  }
+  .letter { width: 220px; left: 20px; }
+  #kissMessage h1 { font-size: 30px; }
+  .bigKiss { font-size: 75px; }
+  .loveEmojis { font-size: 23px; }
+  .treat-title { font-size: 26px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- OPEN SURPRISE -->
+<div id="intro">
+  <div class="gift">🎁</div>
+  <button id="openBtn">Open My Surprise 🎁</button>
+</div>
+
+<!-- ENVELOPE -->
+<div id="envelopeScreen">
+  <div class="envelope-wrapper">
+    <div class="envelope" id="envelope">
+      <div class="letter">
+        <h3>For You ❤️</h3>
+        <p>A little surprise is waiting for you...</p>
+      </div>
+      <div class="envelope-body"></div>
+      <div class="flap"></div>
+    </div>
+    <div class="open-text">Click the envelope 💌</div>
+  </div>
+</div>
+
+<!-- MAIN PAGE -->
+<main id="main">
+  <div class="content">
+
+    <div class="cake">🎂</div>
+
+    <h1 class="birthday-title">
+      Happy Birthday
+      <span class="name">Mehrun Nessa</span> ❤️
+    </h1>
+
+    <p>A special surprise from <b>Najmul Haque</b> 💕</p>
+
+    <!-- Put your photo in the same folder as photo.jpg -->
+    <div class="photo-box">
+      <img src="photo.jpg" alt="Mehrun Nessa"
+           onerror="this.style.display='none';">
+    </div>
+
+    <div class="typing-area">
+      <span id="typingText"></span>
+    </div>
+
+    <!-- LOVE QUESTION -->
+    <div class="question">
+      <h2>One Important Question... 💌</h2>
+      <h2>Do You Love Me? ❤️</h2>
+
+      <div class="buttons">
+        <button class="yes-btn" onclick="yesClicked()">YES ❤️</button>
+        <button class="no-btn" id="noBtn"
+                onmouseover="runAway()"
+                onclick="runAway()"
+                ontouchstart="runAway()">NO 😜</button>
+      </div>
+
+      <div id="answer"></div>
+    </div>
+
+    <!-- EXTRA MESSAGES -->
+    <div class="extra">
+      <button onclick="showCuteMessage('💖 You are one of the most beautiful parts of my life.')">
+        💖 Do You Know How Special You Are?
+      </button>
+
+      <button onclick="showCuteMessage('🥰 I could listen to you talk for hours and still want more.')">
+        🥰 Want To Know Something Cute?
+      </button>
+
+      <button onclick="showCuteMessage('🌸 Your smile is one of my favorite things in this world.')">
+        🌸 What Do I Love About You?
+      </button>
+
+      <button onclick="showCuteMessage('💌 My little secret is... I love you more than words can explain.')">
+        💌 One Little Secret...
+      </button>
+
+      <button onclick="showCuteMessage('✨ If I could make one wish today, I would wish for you to always be happy.')">
+        ✨ One Wish For You
+      </button>
+    </div>
+
+    <!-- FINAL LOVE MESSAGE -->
+    <div id="finalMessage">
+      <h2>I Knew It! 😍❤️</h2>
+
+      <p>You just made my heart the happiest. 🥹❤️</p>
+
+      <p>
+        I hope your birthday is filled with happiness,
+        laughter, love and beautiful memories.
+      </p>
+
+      <p>
+        No matter where life takes us,
+        I hope you always keep smiling. 🌸
+      </p>
+
+      <h2>Happy Birthday, My Special Person! 🎂❤️</h2>
+
+      <p>
+        With lots of love,<br>
+        <b>Najmul Haque ❤️</b>
+      </p>
+    </div>
+
+    <!-- BIRTHDAY TREAT SECTION -->
+    <div id="treatSection">
+      <h2 class="treat-title">Ebar Treat Dao! 😋🎂</h2>
+
+      <p style="font-size:18px;">
+        Eto bhalobasha dilam, birthday wish korlam... ❤️🥹
+        <br>
+        Ebar amar birthday treat koi? 😂🍕
+        <br>
+        Biryani, pizza naki cake? 👀🍗
+      </p>
+
+      <button class="treat-btn" onclick="showTreat()">
+        Treat Dibaa To? 😏❤️
+      </button>
+
+      <div id="treatReply"></div>
+    </div>
+
+  </div>
+</main>
+
+<!-- LOVE RAIN -->
+<div id="loveRain"></div>
+
+<!-- FINAL KISS SCREEN -->
+<div id="kissMessage">
+  <div class="bigKiss">💋</div>
+
+  <h1>Muahhhh! 😘❤️</h1>
+
+  <p>Sending you all my love, kisses and hugs! 💕</p>
+
+  <div class="loveEmojis">
+    ❤️ 💖 💕 💗 💓 💋 😘 🥰 💝 ❤️
+  </div>
+
+  <h2>Happy Birthday, My Love! 🎂❤️</h2>
+  <p>Love you so much! 🥹💖</p>
+
+  <button class="treat-btn" onclick="closeKissScreen()">
+    Ebar Treat Er Kotha Bolo! 😂🍗
+  </button>
+</div>
+
+<!-- Optional background music: add music.mp3 to this folder -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const intro = document.getElementById("intro");
+const envelopeScreen = document.getElementById("envelopeScreen");
+const openBtn = document.getElementById("openBtn");
+const envelope = document.getElementById("envelope");
+const main = document.getElementById("main");
+const music = document.getElementById("music");
+
+let typingIndex = 0;
+let typingStarted = false;
+let loveAnimationStarted = false;
+
+const message =
+  "Today is not just another day... Today is the birthday of someone incredibly special to me. Your smile makes ordinary days brighter, your presence makes life more beautiful, and I hope this little surprise makes you smile. Happy Birthday, my special person. ❤️✨";
+
+openBtn.addEventListener("click", function() {
+  intro.classList.add("hide");
+  music.play().catch(() => {});
+});
+
+envelope.addEventListener("click", function() {
+  if (envelope.classList.contains("open")) return;
+
+  envelope.classList.add("open");
+
+  setTimeout(() => {
+    envelopeScreen.classList.add("hide");
+    main.style.display = "block";
+
+    if (!typingStarted) {
+      typingStarted = true;
+      startTyping();
+    }
+
+    createHearts();
+  }, 1800);
+});
+
+function startTyping() {
+  const typingText = document.getElementById("typingText");
+
+  function type() {
+    if (typingIndex < message.length) {
+      typingText.textContent += message.charAt(typingIndex);
+      typingIndex++;
+      setTimeout(type, 45);
+    }
+  }
+
+  type();
+}
+
+function runAway() {
+  const noBtn = document.getElementById("noBtn");
+  const padding = 15;
+
+  const maxX = Math.max(
+    padding,
+    window.innerWidth - noBtn.offsetWidth - padding
+  );
+
+  const maxY = Math.max(
+    padding,
+    window.innerHeight - noBtn.offsetHeight - padding
+  );
+
+  noBtn.style.position = "fixed";
+  noBtn.style.left =
+    Math.max(padding, Math.random() * maxX) + "px";
+  noBtn.style.top =
+    Math.max(padding, Math.random() * maxY) + "px";
+}
+
+function yesClicked() {
+  const answer = document.getElementById("answer");
+  const finalMessage = document.getElementById("finalMessage");
+  const treatSection = document.getElementById("treatSection");
+
+  answer.textContent = "I Knew You Would Say YES! ❤️🥰";
+  finalMessage.style.display = "block";
+
+  createHearts();
+  startLoveAnimation();
+
+  setTimeout(() => {
+    treatSection.style.display = "block";
+  }, 4500);
+
+  setTimeout(() => {
+    finalMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 500);
+}
+
+function showCuteMessage(message) {
+  document.getElementById("answer").textContent = message;
+  createHearts();
+}
+
+function createHearts() {
+  const emojis = ["❤️", "💖", "💕", "💗", "💓", "💘", "💝"];
+
+  for (let i = 0; i < 15; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent =
+      emojis[Math.floor(Math.random() * emojis.length)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random() * 25) + "px";
+    heart.style.animationDuration = (4 + Math.random() * 5) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 9000);
+  }
+}
+
+setInterval(() => {
+  if (main.style.display === "block") createHearts();
+}, 6000);
+
+function startLoveAnimation() {
+  if (loveAnimationStarted) return;
+  loveAnimationStarted = true;
+
+  const loveRain = document.getElementById("loveRain");
+  const kissMessage = document.getElementById("kissMessage");
+
+  const emojis = [
+    "❤️", "💖", "💕", "💗", "💓", "💝",
+    "💋", "😘", "🥰", "😍", "🫶", "✨"
+  ];
+
+  for (let i = 0; i < 70; i++) {
+    setTimeout(() => {
+      const emoji = document.createElement("div");
+      emoji.className = "loveEmoji";
+      emoji.textContent =
+        emojis[Math.floor(Math.random() * emojis.length)];
+
+      emoji.style.left = Math.random() * 100 + "vw";
+      emoji.style.fontSize = (20 + Math.random() * 35) + "px";
+      emoji.style.animationDuration = (3 + Math.random() * 4) + "s";
+
+      loveRain.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 7000);
+    }, i * 100);
+  }
+
+  setTimeout(() => {
+    kissMessage.style.display = "flex";
+  }, 3500);
+}
+
+function closeKissScreen() {
+  document.getElementById("kissMessage").style.display = "none";
+
+  const treatSection = document.getElementById("treatSection");
+  treatSection.style.display = "block";
+
+  setTimeout(() => {
+    treatSection.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }, 100);
+}
+
+function showTreat() {
+  const reply = document.getElementById("treatReply");
+
+  reply.innerHTML =
+    "Yessss! 🥳❤️<br><br>" +
+    "Treat kintu pakka! 😂🍕🍗🎂<br>" +
+    "Birthday tomar, party amar chai! 😜<br><br>" +
+    "Love you, Mehrun Nessa! ❤️😘";
+
+  createHearts();
+}
+</script>
+
+</body>
+</html>
